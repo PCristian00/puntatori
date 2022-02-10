@@ -26,12 +26,24 @@ void incrementa(void *data, int pdim) {
         char *pchar;
         pchar = (char *) data;
         ++(*pchar);
-    }
-    else if (pdim == sizeof(int)) {
+    } else if (pdim == sizeof(int)) {
         int *pint;
         pint = (int *) data;
         ++(*pint);
     }
+}
+
+//Addizione tra due interi
+int addizione(int a, int b) { return (a + b); }
+
+//Sottrazione tra due interi
+int sottrazione(int a, int b) { return (a - b); }
+
+//Operazione tra due interi (puntatore a funzione come parametro)
+int operazione(int x, int y, int (*funzdachiamare)(int, int)) {
+    int g;
+    g = (*funzdachiamare)(x, y);
+    return (g);
 }
 
 
@@ -40,8 +52,8 @@ int main() {
     //cin>> x >> y;
     // maxn(x,y)=0 non può essere compilato
     // La funzione non cambia i valori di x e y, è inutile per il nostro caso
-    int m = maxn(x, y);
-    m = 0;
+    int maggiore = maxn(x, y);
+    maggiore = 0;
     cout << "x = " << x << " y = " << y << '\n';
 
     cout << endl;
@@ -66,6 +78,14 @@ int main() {
     incrementa(&a, sizeof(a));
     incrementa(&b, sizeof(b));
     cout << a << ", " << b << '\n';
+
+    int m, n;
+    int (*meno)(int, int) = sottrazione; // definisce un puntatore a
+    // funzione e lo assegna a sottrazione
+    m = operazione(7, 5, addizione);
+    cout << "7 + 5 = " << m << endl;
+    n = operazione(20, m, meno);
+    cout << "20 - " << m << " = " << n << endl;
 
 
     return 0;
